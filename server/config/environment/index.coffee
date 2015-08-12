@@ -34,6 +34,11 @@ all =
       db:
         safe: true
 
+  facebook:
+    clientID: process.env.FACEBOOK_ID or '798685960249948'
+    clientSecret: process.env.FACEBOOK_SECRET or '1d495317c9f32cb21383c49a53a0a015'
+    callbackURL: (process.env.DOMAIN or '') + '/auth/facebook/callback'
+
   naver:
 #    clientID: process.env.NAVER_ID or '6tyrMmP8dfHCtDLwPVzU'
 #    clientSecret: process.env.NAVER_SECRET or '0UEj2Ayfv0'
