@@ -35,8 +35,8 @@ all =
         safe: true
 
   facebook:
-    clientID: process.env.FACEBOOK_ID or '798685960249948'
-    clientSecret: process.env.FACEBOOK_SECRET or '1d495317c9f32cb21383c49a53a0a015'
+    clientID: process.env.FACEBOOK_ID or '223690454408215'
+    clientSecret: process.env.FACEBOOK_SECRET or 'cd1be924e755fe55bef841131af215aa'
     callbackURL: (process.env.DOMAIN or '') + '/auth/facebook/callback'
 
   naver:

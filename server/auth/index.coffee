@@ -6,13 +6,13 @@ config = require('../config/environment')
 User = require('../api/user/user.model')
 
 # Passport Configuration
-# require('./facebook/passport').setup User, config
+require('./facebook/passport').setup User, config
 require('./naver/passport').setup User, config
 # require('./google/passport').setup User, config
 
 router = express.Router()
 
-# router.use '/facebook', require('./facebook')
+router.use '/facebook', require('./facebook')
 router.use '/naver', require('./naver')
 # router.use '/google', require('./google')
 
