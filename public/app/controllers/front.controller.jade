@@ -1,7 +1,16 @@
 div(front-controller='', a-trianglify='', data-colors='Greens')
   .container(style='text-align:center')
     //- word-art(data-text='rangers town') test keyword
-    a.btn.btn-primary(href='/auth/facebook') FACEBOOK 으로 로그인하기
+
+
+    
+    br
+    br
+    div(ng-if='!vm.user')
+      a.btn.btn-lg.btn-primary(href='/auth/facebook') FACEBOOK 으로 로그인하기
+    div(ng-if='vm.user')
+      a.btn.btn-lg.btn-primary(href='', ui-sref='lounge') 입장하기
+
     //- game-package(data-user='vm.user') 
     //- prototype 
   
