@@ -1,0 +1,12 @@
+div(number-chess-directive='')
+
+  h1 test
+  .chessboard-wrap
+    .chessboard
+      .square(ng-repeat='square in vm.numberChess.chessboard.squares',
+        style='left:{{ (square.col - 1) * vm.size }}px;top:{{ (9 - square.row) * vm.size }}px')
+        | {{ square.row }} x {{ square.col }}
+      .line-1
+      .line-2
+
+  pre {{ vm | json }}
