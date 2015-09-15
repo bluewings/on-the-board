@@ -1,6 +1,6 @@
 div(number-chess-directive='')
 
-  h1 test
+  button.btn.btn-default(ng-click='vm.setPieces()')
   .chessboard-wrap
     .chessboard
       .square(ng-repeat='square in vm.numberChess.chessboard.squares',

@@ -1,18 +1,43 @@
 'use strict'
 
-
-
 App = {}
 
 class App.NumberChess
   constructor: (@socket, @roomAPI, @resource) ->
+    @players = []
     @reset()
-    return
 
-  setPieces: ->
 
   reset: ->
     @chessboard = new App.Chessboard()
+    return
+
+  start: ->
+    @reset()
+
+
+
+  syncdata: ->
+    return
+
+  enter: (client) ->
+    player = new App.Player(client)
+    @players.push player
+    @syncdata()
+    return
+
+  leave: (client) ->
+    for player, i in @players
+      if player.client.id is client.id
+        @players.splice i, 1
+        @syncdata()
+        return
+    return
+
+  setItems: ->
+
+
+    return
 
 
 class App.Square
@@ -61,7 +86,7 @@ class App.Chessboard
 
 
 
-class App.Pieces
+class App.Items
   constructor: ->
     @reset()
 
@@ -74,6 +99,8 @@ class App.Pieces
     @pieces.push new App.Piece('king')
     @shuffle()
     return
+
+
 
   shuffle: (array) ->
     pieces = @pieces
@@ -100,30 +127,9 @@ class App.Player
 
   reset: ->
 
-    @pieces = new App.Pieces()
-    console.log @pieces
+    @items = new App.Items()
+    # console.log @pieces
 
     return
 
-angular.module 'rangers'
-.directive 'numberChess', ->
-  restrict: 'E'
-  replace: true
-  templateUrl: 'app/directives/number-chess.directive.html'
-  scope: true
-  bindToController: true
-  controllerAs: 'vm'
-  controller: ($scope, $element, $timeout, resource) ->
-    vm = @
-    vm.a = []
-    vm.size = 60
-    vm.numberChess = new App.NumberChess()
-
-
-    vm.a = vm.numberChess.chessboard.adjacentSquares(1, 1)
-
-    vm.player1 = new App.Player()
-    vm.player2 = new App.Player()
-
-
-    return
+module.exports = App

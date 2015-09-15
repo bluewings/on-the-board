@@ -1,61 +1,56 @@
 [number-chess-directive=''] {
     $square-width: 60px;
     text-align: left;
-          perspective: 1000px;
-
-
-.chessboard-wrap {
-  width: $square-width * 6;
-  height: $square-width * 9;
-  transform-style: preserve-3d;
-    .chessboard {
-            
-      /*transform:rotateX(-30deg) rotateZ(30deg);*/
-        position: relative;
+    perspective: 1000px;
+    .chessboard-wrap {
         width: $square-width * 6;
-  height: $square-width * 9;
-        .side-1 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: lightyellow;
-            width: $square-width * 3;
-            height: 100%;
-        }
-        .side-2 {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: lightgreen;
-            width: $square-width * 3;
-            height: 100%;
-        }
-        .line-1 {
-            position: absolute;
-            top: 0;
-            left: $square-width * 2 - 1;
-            
-            width: 3px;
-            height: 100%;
-            border: 1px solid red;
-            background-color:red;
-        }
-        .line-2 {
-            position: absolute;
-            top: 0;
-            
-            right: $square-width * 2 - 2;
-            width: 3px;
-            height: 100%;
-            border: 1px solid red;
-            background-color:red;
-        }
-        .square {
-            position: absolute;
-            border: 1px solid silver;
-            width: $square-width + 1;
-            height: $square-width + 1;
+        height: $square-width * 9;
+        transform-style: preserve-3d;
+        .chessboard {
+            /*transform:rotateX(-30deg) rotateZ(30deg);*/
+            position: relative;
+            width: $square-width * 6;
+            height: $square-width * 9;
+/*            .side-1 {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: lightyellow;
+                width: $square-width * 3;
+                height: 100%;
+            }
+            .side-2 {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: lightgreen;
+                width: $square-width * 3;
+                height: 100%;
+            }*/
+/*            .line-1 {
+                position: absolute;
+                top: 0;
+                left: $square-width * 2 - 1;
+                width: 3px;
+                height: 100%;
+                border: 1px solid red;
+                background-color: red;
+            }
+            .line-2 {
+                position: absolute;
+                top: 0;
+                right: $square-width * 2 - 2;
+                width: 3px;
+                height: 100%;
+                border: 1px solid red;
+                background-color: red;
+            }*/
+            .square {
+                position: absolute;
+                border: 1px solid silver;
+                width: $square-width + 1;
+                height: $square-width + 1;
+            }
         }
     }
-  }
 }

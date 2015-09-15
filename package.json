@@ -65,6 +65,7 @@
     "jit-grunt": "^0.9.1",
     "lodash": "^3.6.0",
     "mocha": "^2.2.5",
+    "should": "^7.1.0",
     "time-grunt": "^1.1.0"
   }
 }
