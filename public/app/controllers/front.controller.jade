@@ -1,12 +1,25 @@
 div(front-controller='', a-trianglify='', data-colors='Greens')
   .container(style='text-align:center')
     //- word-art(data-text='rangers town') test keyword
+<<<<<<< HEAD
     br  
     br  
     br  
     number-chess
     br  
     //- a.btn.btn-primary(href='/auth/facebook') FACEBOOK 으로 로그인하
+=======
+
+
+    
+    br
+    br
+    div(ng-if='!vm.user')
+      a.btn.btn-lg.btn-primary(href='/auth/facebook') FACEBOOK 으로 로그인하기
+    div(ng-if='vm.user')
+      a.btn.btn-lg.btn-primary(href='', ui-sref='lounge') 입장하기
+
+>>>>>>> f39069deb869a8a9391282ec6b6f819f2a8445d5
     //- game-package(data-user='vm.user') 
     //- prototype 
   
