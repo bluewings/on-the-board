@@ -13,8 +13,14 @@ module.exports = (io) ->
   systemSpeaker = '[GM]BROWN'
 
   getSignature = (func) ->
-
-    return ['aaa', 'bbb']
+    signatures = []
+    if func and typeof func is 'function'
+      matches = func.toString().match(/function[^(]*\(([^)]*)\)/)
+      if matches and matches.length is 2
+        matches[1] = matches[1].replace(/\s+/g, '')
+        if matches[1] isnt ''
+          signatures = matches[1].split(',')
+    signatures
 
   emitMessage = (roomId, message, name, sender) ->
     io.to(roomId).emit 'message',
@@ -174,7 +180,8 @@ module.exports = (io) ->
         if exports and typeof exports is 'object'
           exports_ = {}
           for key, value of exports
-            if exports.hasOwnProperty(key) and typeof value is 'function'
+            # if exports.hasOwnProperty(key) and typeof value is 'function'
+            if typeof value is 'function'
               exports_[key] = getSignature(value)
 
           console.log '>>>> exports check 2'
@@ -343,6 +350,11 @@ module.exports = (io) ->
           console.log onlineUsers
 
           socket.emit 'stat.me', client
+          if exports
+            io.emit 'stat.exports', {
+              roomId: room.id
+              exports: exports
+            }
           io.emit 'stat.clients', clients.get()
           io.emit 'stat.rooms', rooms.get()
           fn(null, room)

@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'rangers'
-.factory 'mySocket', (socketFactory, $cookieStore, $state, $rootScope) ->
+.factory 'mySocket', (socketFactory, $cookieStore, $state, $rootScope, exports) ->
   token = $cookieStore.get 'token'
   if token
     ioSocket = io("?token=#{token}", path: '/socket.io')
@@ -63,6 +63,31 @@ angular.module 'rangers'
 
     setStat()
     return
+
+
+  mySocket.on 'stat.exports', (entered) ->
+    console.log '>>> exports'
+
+    unless exports[entered.roomId]
+      exports[entered.roomId] = {}
+
+    for key, value of entered.exports
+      if entered.exports.hasOwnProperty(key)
+        do (key, value) ->
+          exports[entered.roomId][key] = ->
+            alert(value)
+            return
+    # console.log entered
+
+    # mySocket.stat.me = user
+    # mySocket.stat.room = mySocket.stat.me.room
+
+
+
+
+    # setStat()
+    return
+
 
   mySocket.on 'stat.clients', (clients) ->
     # console.log 'stat.client!!!'

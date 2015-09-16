@@ -1,11 +1,12 @@
 'use strict'
 
 angular.module 'rangers'
-.controller 'GameSaboteurController', ($scope, $timeout, socket, me, stages, util, chat) ->  
+.controller 'GameSaboteurController', ($scope, $timeout, socket, me, exports, stages, util, chat) ->  
   vm = @
 
   vm.stage = stages[Math.floor(Math.random() * stages.length)]
 
+  vm.exports = exports
 
   # chatting sample
   vm.messages = chat.messages

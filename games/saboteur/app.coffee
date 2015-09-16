@@ -144,6 +144,9 @@ class App.Saboteur
 
     console.log '>>>>>>> entered !!!!'
 
+    player.setup = (startFlag, val2) ->
+      return
+
     return player
 
   leave: (client) ->
@@ -168,5 +171,8 @@ class App.Player
     @score = 0
     @rank = 99
     @answer = ''
+
+  drawCard: (index) ->
+    return
 
 module.exports = App

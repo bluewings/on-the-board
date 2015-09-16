@@ -13,6 +13,7 @@ angular.module 'rangers', [
   'schemaForm'
   'config'
 ]
+.constant 'exports', {}
 .config ($urlRouterProvider, $stateProvider, $httpProvider, $provide, jwtInterceptorProvider) ->
 
   # set JWT token
@@ -177,6 +178,11 @@ angular.module 'rangers', [
               deferred.resolve mySocket.stat.me
             return
           deferred.promise
+
+        exports: ($stateParams, exports) ->
+          unless exports[$stateParams.roomId]
+            exports[$stateParams.roomId] = {}
+          exports[$stateParams.roomId]
 
         rangers: (resource) ->
           resource.rangers

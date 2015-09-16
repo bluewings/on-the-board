@@ -1,9 +1,11 @@
-div(game-sample-controller='', style='background-image:url(/assets/stages/{{ vm.stage }})')
+div(game-sample-controller='', sstyle='background-image:url(/assets/stages/{{ vm.stage }})')
   .container
     .frame.frame-lg(class='frame-{{ vm.data.players.length }}')
-  
+      pre {{ vm.exports | json }}
       //- 내 레인저
       //- .ranger-me
+      button.btn.btn-default(ng-click='vm.exports.reset()') reset
+      button.btn.btn-default(ng-click='vm.exports.drawCard()') drawCard
 
       .player.player-horizontal.player-xl.player-me.player-md
         .ranger-wrap
