@@ -12,6 +12,10 @@ events = require('events')
 module.exports = (io) ->
   systemSpeaker = '[GM]BROWN'
 
+  getSignature = (func) ->
+
+    return ['aaa', 'bbb']
+
   emitMessage = (roomId, message, name, sender) ->
     io.to(roomId).emit 'message',
       sender: sender
@@ -156,6 +160,7 @@ module.exports = (io) ->
       client.socket().on '__message__', client.callback
       @clients[client.id] = true
       emitMessage @id, "@#{client.profile.name} has entered the #{@name}.", systemSpeaker
+      
       if @instance and typeof @instance.onenter is 'function'
 
         #
@@ -163,8 +168,18 @@ module.exports = (io) ->
         #
         #
         clientDelegate = new ClientDelegate(client, @)
+        exports = @instance.onenter clientDelegate
+        console.log '>>>> exports check'
+        console.log exports
+        if exports and typeof exports is 'object'
+          exports_ = {}
+          for key, value of exports
+            if exports.hasOwnProperty(key) and typeof value is 'function'
+              exports_[key] = getSignature(value)
 
-        @instance.onenter clientDelegate
+          console.log '>>>> exports check 2'
+          console.log exports_
+          return exports_
       return
 
     leave: (client) ->
@@ -310,7 +325,11 @@ module.exports = (io) ->
         else if room and room.gameId and room.gameId isnt data.gameId
           fn('gameId is not matched.')
         else if room and room.join
-          room.join client
+          exports = room.join client
+
+          console.log '>>> exports'
+          console.log exports
+
 
 
           # 방들어옴 (이동)

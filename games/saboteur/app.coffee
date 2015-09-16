@@ -141,7 +141,10 @@ class App.Saboteur
     player = new App.Player(client)
     @players.push player
     @syncdata()
-    return
+
+    console.log '>>>>>>> entered !!!!'
+
+    return player
 
   leave: (client) ->
     for player, i in @players

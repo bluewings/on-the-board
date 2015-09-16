@@ -18,8 +18,16 @@ module.exports =
 
     instance =
       onenter: (client) ->
-        numbers.enter client
-        return
+        player = numbers.enter client
+        console.log '>>> return check'
+        console.log player
+        console.log '>>> prototype'
+        console.log player.prototype
+        for key, value of player
+          if typeof value is 'function'
+            console.log '>>> ' + key
+        player
+      
       
       onleave: (client) ->
         numbers.leave client
