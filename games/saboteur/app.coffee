@@ -30,6 +30,11 @@ class App.Saboteur
       my.start(10)
       return
 
+    @socket.on 'drawCard', (sender, message) ->
+      console.log '>>>> get Args drawCard'
+      console.log arguments
+      return
+
     # 문제에 대답
     @socket.on 'answer', (sender, answer) ->
       player = my.findPlayer(sender)
