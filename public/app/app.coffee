@@ -148,6 +148,11 @@ angular.module 'rangers', [
           listener.apply null, args
       return
 
+  onrfc =
+    listeners: {}
+    callback: (functionName, message) ->
+      return
+
   onchat =
     messages: []
     callback: (message) ->
@@ -182,6 +187,7 @@ angular.module 'rangers', [
         exports: ($stateParams, exports) ->
           unless exports[$stateParams.roomId]
             exports[$stateParams.roomId] = {}
+          onrfc.refered = exports[$stateParams.roomId]
           exports[$stateParams.roomId]
 
         rangers: (resource) ->
@@ -194,6 +200,8 @@ angular.module 'rangers', [
           onmessage.listeners = {}
           try mySocket.removeListener '__message__', onmessage.callback
           mySocket.on '__message__', onmessage.callback
+          try mySocket.removeListener '__functionresolve__', onrfc.callback
+          mySocket.on '__functionresolve__', onrfc.callback
           socket = 
             emit: (eventName, message) ->
               args = ['__message__']

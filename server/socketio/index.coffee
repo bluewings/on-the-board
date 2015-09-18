@@ -179,13 +179,46 @@ module.exports = (io) ->
         console.log exports
         if exports and typeof exports is 'object'
           exports_ = {}
+          hasExports = false
           for key, value of exports
             # if exports.hasOwnProperty(key) and typeof value is 'function'
             if typeof value is 'function'
               exports_[key] = getSignature(value)
+              hasExports = true
 
           console.log '>>>> exports check 2'
           console.log exports_
+          if hasExports
+            do (client, exports) ->
+              client.functionCallback = ->
+                args = []
+                for each in arguments
+                  args.push each
+                functionName = args.shift()
+
+
+                console.log ''
+                console.log ''
+
+                console.log 'wow i got it'
+                console.log arguments
+                console.log ''
+                if exports[functionName]
+                  promise = exports[functionName].apply exports, args
+                  if promise and promise.then
+                    promise.then (success) ->
+                      console.log '>>> success!!!'
+                      console.log success
+                      client.socket().emit '__functionresolve__', success
+                    , (error) ->
+                      console.log '>>> error!!!'
+
+                console.log ''
+                return
+
+              client.socket().on '__function__', client.functionCallback
+
+
           return exports_
       return
 
@@ -200,6 +233,10 @@ module.exports = (io) ->
       if client.callback
         client.socket().removeListener '__message__', client.callback
         delete client.callback
+      if client.functionCallback
+        client.socket().removeListener '__function__', client.functionCallback
+        delete client.functionCallback
+
       delete @clients[client.id]
       client.room = null
       return

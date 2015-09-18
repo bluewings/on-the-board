@@ -75,7 +75,8 @@ angular.module 'rangers'
       if entered.exports.hasOwnProperty(key)
         do (key, value) ->
           exports[entered.roomId][key] = (arg1, arg2)->
-            args = ['__message__', key]
+            # args = ['__message__', key]
+            args = ['__function__', key]
             for arg in arguments
               args.push arg
             mySocket.emit.apply mySocket, args

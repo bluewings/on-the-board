@@ -1,5 +1,7 @@
 'use strict'
 
+Promise = require('rsvp').Promise
+
 App = {}
 
 class App.Saboteur
@@ -178,6 +180,20 @@ class App.Player
     @answer = ''
 
   drawCard: (index) ->
-    return
+    my = @
+
+    promise = new Promise (resolve, reject) ->
+
+
+      console.log '>>> inside of drawCard'
+      console.log 'this is me'
+      console.log arguments
+      console.log @
+      console.log ''
+      console.log ''
+      resolve 'mission acomplished'
+
+
+    promise
 
 module.exports = App
