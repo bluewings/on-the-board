@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'rangers'
-.factory 'mySocket', (socketFactory, $cookieStore, $state, $rootScope, exports) ->
+.factory 'mySocket', (socketFactory, $q, $cookieStore, $state, $rootScope, exports) ->
   token = $cookieStore.get 'token'
   if token
     ioSocket = io("?token=#{token}", path: '/socket.io')
@@ -64,6 +64,7 @@ angular.module 'rangers'
     setStat()
     return
 
+  resolver = {}
 
   mySocket.on 'stat.exports', (entered) ->
     console.log '>>> exports'
@@ -74,14 +75,24 @@ angular.module 'rangers'
     for key, value of entered.exports
       if entered.exports.hasOwnProperty(key)
         do (key, value) ->
-          exports[entered.roomId][key] = (arg1, arg2)->
+          exports[entered.roomId][key] = (arg1, arg2) ->
+            uniq = Math.floor(Math.random() * 1000000)
+
+
+
+
+            deferred = $q.defer()
             # args = ['__message__', key]
             args = ['__function__', key]
+            args.push uniq
             for arg in arguments
               args.push arg
             mySocket.emit.apply mySocket, args
+
+            resolver[uniq] = deferred
             # alert(value)
-            return
+            deferred.promise
+            # return
     # console.log entered
 
     # mySocket.stat.me = user
@@ -91,6 +102,14 @@ angular.module 'rangers'
 
 
     # setStat()
+    return
+
+  mySocket.on '__functionresolve__', (callbackId, data) ->
+    console.log '>>> function resolve'
+    if resolver[callbackId]
+      resolver[callbackId].resolve(data)
+      delete resolver[callbackId]
+    # console.log arguments
     return
 
 

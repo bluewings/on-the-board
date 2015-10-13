@@ -8,6 +8,21 @@ angular.module 'rangers'
 
   vm.exports = exports
 
+  vm.interface = []
+  for name, value of exports
+    if typeof value is 'function'
+
+      vm.interface.push name: name
+
+  vm.exec = (funcName) ->
+    vm.exports[funcName]()
+    .then (data) ->
+      console.log funcName + ' > get result from server'
+      console.log data
+      return
+    return
+
+
   # chatting sample
   vm.messages = chat.messages
   vm.message = ''

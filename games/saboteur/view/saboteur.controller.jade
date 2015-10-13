@@ -1,7 +1,11 @@
 div(game-sample-controller='', sstyle='background-image:url(/assets/stages/{{ vm.stage }})')
   .container
     .frame.frame-lg(class='frame-{{ vm.data.players.length }}')
-      pre {{ vm.exports | json }}
+      //- pre {{ vm.exports | json }}
+      //- pre {{ vm.interface | json }}
+      div(ng-repeat='each in vm.interface')
+        button.btn.btn-default(ng-click='vm.exec(each.name)')
+          | {{ each.name }}
       //- 내 레인저
       //- .ranger-me
       button.btn.btn-default(ng-click='vm.exports.reset()') reset

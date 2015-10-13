@@ -8,6 +8,7 @@ userControl = require('../api/user/user.controller')
 gameControl = require('../api/game/game.controller')
 resourceControl = require('../api/resource/resource.controller')
 events = require('events')
+Promise = require('rsvp').Promise
 
 module.exports = (io) ->
   systemSpeaker = '[GM]BROWN'
@@ -195,23 +196,18 @@ module.exports = (io) ->
                 for each in arguments
                   args.push each
                 functionName = args.shift()
-
-
-                console.log ''
-                console.log ''
-
-                console.log 'wow i got it'
-                console.log arguments
-                console.log ''
+                callbackId = args.shift()
                 if exports[functionName]
                   promise = exports[functionName].apply exports, args
-                  if promise and promise.then
+                  if promise instanceof Promise
                     promise.then (success) ->
-                      console.log '>>> success!!!'
-                      console.log success
-                      client.socket().emit '__functionresolve__', success
+                      client.socket().emit '__functionresolve__', callbackId, success
+                      return
                     , (error) ->
-                      console.log '>>> error!!!'
+                      client.socket().emit '__functionresolve__', callbackId, null, error
+                      return
+                  else
+                    client.socket().emit '__functionresolve__', callbackId, promise
 
                 console.log ''
                 return
